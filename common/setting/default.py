@@ -1,0 +1,2 @@
+class DefaultConfig(object):
+    pass
