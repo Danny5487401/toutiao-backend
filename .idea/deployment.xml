@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="python@81.68.197.3:22">
+  <component name="PublishConfigData" serverName="tencent">
     <serverData>
-      <paths name="python@192.168.28.128:22">
+      <paths name="tencent">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="python@81.68.197.3:22">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/toutiao-backend" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/home/python/toutiao-backend" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>
