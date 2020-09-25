@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" serverName="tencent">
+  <component name="PublishConfigData" autoUpload="Always" serverName="python@81.68.197.3:22 password">
     <serverData>
-      <paths name="tencent">
+      <paths name="Tencent">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/toutiao-backend" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="python@81.68.197.3:22 password">
         <serverdata>
           <mappings>
             <mapping deploy="/home/python/toutiao-backend" local="$PROJECT_DIR$" />
@@ -10,5 +17,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
