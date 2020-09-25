@@ -25,4 +25,16 @@ def create_app(config, enable_config_file=False):
     :return: 应用
     """
     app = create_flask_app(config, enable_config_file)
+    # 注册用户模块蓝图
+    from .resources.user import user_bp
+    app.register_blueprint(user_bp)
+
+    # 限流器
+    from utils.limiter import limiter as lmt
+    lmt.init_app(app)
+
+    # 注册url转换器
+    from utils.converters import register_converters
+    register_converters(app)
+
     return app
