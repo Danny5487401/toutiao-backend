@@ -4,8 +4,9 @@ import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(BASE_DIR, 'common'))
-sys.path.insert(0, os.path.join(BASE_DIR, 'toutiao'))
-print(sys.path)
+from flask import jsonify
+# sys.path.insert(0, os.path.join(BASE_DIR, 'toutiao'))
+# print(sys.path)
 
 from toutiao import create_app
 from settings.default import DefaultConfig

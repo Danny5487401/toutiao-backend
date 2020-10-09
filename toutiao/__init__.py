@@ -40,4 +40,5 @@ def create_app(config, enable_config_file=False):
     from utils.converters import register_converters
     register_converters(app)
 
+
     return app
