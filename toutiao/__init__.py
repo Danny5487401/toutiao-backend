@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 
 
 def create_flask_app(config, enable_config_file=False):
@@ -25,6 +26,8 @@ def create_app(config, enable_config_file=False):
     :return: 应用
     """
     app = create_flask_app(config, enable_config_file)
+
+    CORS(app)
     # 注册用户模块蓝图
     from .resources.user import user_bp
     app.register_blueprint(user_bp)
