@@ -5,6 +5,7 @@ import random
 from flask import request,current_app
 from . import constants
 from celery_tasks.sms.tasks import send_sms_code
+from datetime import datetime, timedelta
 
 
 class SMSVerificationCodeResource(Resource):
@@ -27,3 +28,25 @@ class SMSVerificationCodeResource(Resource):
         # current_app.redis_master.setex('app:code:{}'.format(mobile), constants.SMS_VERIFICATION_CODE_EXPIRES, code)
         send_sms_code.delay(mobile, code)
         return {'mobile': mobile}
+
+class AuthorizationResource(Resource):
+    def _generate_tokens(self, user_id, refresh=True):
+        """
+        生成token 和refresh_token
+        :param user_id: 用户id
+        :return: token, refresh_token
+        """
+        # 颁发JWT
+        secret = current_app.config['JWT_SECRET']
+        # 生成调用token， refresh_token
+        expiry = datetime.utcnow() + timedelta(hours=current_app.config['JWT_EXPIRY_HOURS'])
+
+        token = generate_jwt({'user_id': user_id}, expiry, secret)
+
+        if refresh:
+            exipry = datetime.utcnow() + timedelta(days=current_app.config['JWT_REFRESH_DAYS'])
+            refresh_token = generate_jwt({'user_id': user_id, 'is_refresh': True}, exipry, secret)
+        else:
+            refresh_token = None
+
+        return token, refresh_token
