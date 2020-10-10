@@ -6,6 +6,16 @@ class DefaultConfig(object):
 
     RABBITMQ = 'amqp://admin:admin@81.68.197.3:5672/my_vhost'
 
+    # flask-sqlalchemy使用的参数
+    # SQLALCHEMY_DATABASE_URI = 'mysql://root:mysql@127.0.0.1/toutiao'  # 数据库
+    SQLALCHEMY_BINDS = {
+        'bj-m1': 'mysql://root:123456@81.68.197.3:3307/toutiao',
+        'bj-s1': 'mysql://root:123456@81.68.197.3:3308/toutiao',
+        'masters': ['bj-m1'],
+        'slaves': ['bj-s1'],
+        'default': 'bj-m1'
+    }
+
     # CORS
     # TODO 调试后要修改
     CORS_ORIGINS = '*'
