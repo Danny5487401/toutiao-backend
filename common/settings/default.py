@@ -16,6 +16,12 @@ class DefaultConfig(object):
         'default': 'bj-m1'
     }
 
+
+    # Snowflake ID Worker 参数
+    DATACENTER_ID = 0
+    WORKER_ID = 0
+    SEQUENCE = 0
+
     # CORS
     # TODO 调试后要修改
     CORS_ORIGINS = '*'
