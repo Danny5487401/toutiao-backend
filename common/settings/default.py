@@ -16,6 +16,20 @@ class DefaultConfig(object):
         'default': 'bj-m1'
     }
 
+    # redis 哨兵
+    REDIS_SENTINELS = [
+        ('172.17.0.11', '26380'),
+        ('172.17.0.11', '26381'),
+        ('172.17.0.11', '26382'),
+    ]
+    REDIS_SENTINEL_SERVICE_NAME = 'mymaster'
+
+    # redis 集群
+    REDIS_CLUSTER = [
+        {'host': '172.17.0.11', 'port': '7000'},
+        {'host': '172.17.0.11', 'port': '7001'},
+        {'host': '172.17.0.11', 'port': '7002'},
+    ]
 
     # Snowflake ID Worker 参数
     DATACENTER_ID = 0

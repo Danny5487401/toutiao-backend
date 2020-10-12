@@ -49,4 +49,14 @@ def create_app(config, enable_config_file=False):
     from utils.converters import register_converters
     register_converters(app)
 
+    # 哨兵配置
+    from redis.sentinel import Sentinel
+    _sentinel = Sentinel(app.config['REDIS_SENTINELS'])
+    app.redis_master = _sentinel.master_for(app.config['REDIS_SENTINEL_SERVICE_NAME'])
+    app.redis_slave = _sentinel.slave_for(app.config['REDIS_SENTINEL_SERVICE_NAME'])
+
+    # 集群配置
+    from rediscluster import StrictRedisCluster
+    app.redis_cluster = StrictRedisCluster(startup_nodes=app.config['REDIS_CLUSTER'])
+
     return app
