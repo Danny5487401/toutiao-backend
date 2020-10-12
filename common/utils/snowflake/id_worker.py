@@ -4,7 +4,7 @@
 import time
 import logging
 
-# from .exceptions import InvalidSystemClock
+from exceptions import InvalidSystemClock
 
 
 # 64位ID的划分
