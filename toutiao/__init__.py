@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS
+from redis.exceptions import RedisError
 
 
 def create_flask_app(config, enable_config_file=False):
@@ -48,6 +49,11 @@ def create_app(config, enable_config_file=False):
     # 注册url转换器
     from utils.converters import register_converters
     register_converters(app)
+
+    # MySQL数据库连接初始化
+    from models import db
+
+    db.init_app(app)
 
     # 哨兵配置
     from redis.sentinel import Sentinel

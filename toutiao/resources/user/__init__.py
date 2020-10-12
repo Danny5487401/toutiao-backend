@@ -3,6 +3,7 @@ from flask_restful import Api
 
 from utils.output import output_json
 from . import passport
+from . import profile
 
 user_bp = Blueprint('user', __name__)
 user_api = Api(user_bp)
@@ -13,3 +14,6 @@ user_api.add_resource(passport.SMSVerificationCodeResource, '/v1_0/sms/codes/<mo
 
 user_api.add_resource(passport.AuthorizationResource, '/v1_0/authorizations',
                       endpoint='Authorization')
+
+user_api.add_resource(profile.CurrentUserResource, '/v1_0/user',
+                      endpoint='CurrentUser')

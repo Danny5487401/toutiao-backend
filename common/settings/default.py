@@ -16,6 +16,9 @@ class DefaultConfig(object):
         'default': 'bj-m1'
     }
 
+    SQLALCHEMY_TRACK_MODIFICATIONS = False  # 追踪数据的修改信号
+    SQLALCHEMY_ECHO = True
+
     # redis 哨兵
     REDIS_SENTINELS = [
         ('172.17.0.11', '26380'),
@@ -30,6 +33,12 @@ class DefaultConfig(object):
         {'host': '172.17.0.11', 'port': '7001'},
         {'host': '172.17.0.11', 'port': '7002'},
     ]
+
+    # # 限流服务redis
+    # # RATELIMIT_STORAGE_URL = 'redis://127.0.0.1:6379/0'
+    # RATELIMIT_STORAGE_URL = 'redis+sentinel://172.17.0.11:26380,127.0.0.1:26381,172.17.0.11:26382/mymaster'
+    # RATELIMIT_STRATEGY = 'moving-window'
+    # # RATELIMIT_DEFAULT = ['200/hour;1000/day']
 
     # Snowflake ID Worker 参数
     DATACENTER_ID = 0

@@ -29,9 +29,13 @@ class SMSVerificationCodeResource(Resource):
     ]
 
     def get(self, mobile):
-        code = '{:0>6d}'.format(random.randint(0, 999999))
+        # code = '{:0>6d}'.format(random.randint(0, 999999))
+        # print(code)
+        code = 123456
         current_app.redis_master.setex('app:code:{}'.format(mobile), constants.SMS_VERIFICATION_CODE_EXPIRES, code)
-        send_sms_code.delay(mobile, code)
+
+        # send_sms_code.delay(mobile, code)
+
         return {'mobile': mobile}
 
 
@@ -111,5 +115,6 @@ class AuthorizationResource(Resource):
         # user_name  不一定
 
         token, refresh_token = self._generate_tokens(user.id)
+
 
         return {'token': token, 'refresh_token': refresh_token}, 201
