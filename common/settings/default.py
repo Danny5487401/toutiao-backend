@@ -40,6 +40,11 @@ class DefaultConfig(object):
     # RATELIMIT_STRATEGY = 'moving-window'
     # # RATELIMIT_DEFAULT = ['200/hour;1000/day']
 
+    QINIU_ACCESS_KEY = 'b4hkdEqyufbchlsAj0Xm17MptIo9pBLxkd83pB3p'
+    QINIU_SECRET_KEY = 'umDHZLmgiG7PC6exJmdKw6V4ITf2yDXzqH8x0i0w'
+    QINIU_BUCKET_NAME = 'toutiao-app'
+    QINIU_DOMAIN = 'http://qi2xepx1u.hd-bkt.clouddn.com/'
+
     # Snowflake ID Worker 参数
     DATACENTER_ID = 0
     WORKER_ID = 0
