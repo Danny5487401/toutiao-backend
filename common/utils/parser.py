@@ -13,6 +13,7 @@ def mobile(mobile_str):
     else:
         raise ValueError('{} is not a valid mobile'.format(mobile_str))
 
+
 def regex(pattern):
     """
     正则检验

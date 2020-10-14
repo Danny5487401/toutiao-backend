@@ -2,7 +2,13 @@ import random
 
 
 # 默认用户头像
-DEFAULT_USER_PROFILE_PHOTO = 'Fkj6tQi3xJwVXi1u2swCElotfdCi'  # 程序猿
+DEFAULT_USER_PROFILE_PHOTO = 'avator.png'  # 背景图
+
+# 全部频道缓存有效期，秒
+ALL_CHANNELS_CACHE_TTL = 24 * 60 * 60
+
+# 默认用户频道缓存有效期，秒
+DEFAULT_USER_CHANNELS_CACHE_TTL = 24 * 60 * 60
 
 
 class BaseCacheTTL(object):
@@ -33,3 +39,18 @@ class UserNotExistsCacheTTL(BaseCacheTTL):
     """
     TTL = 5 * 60
     MAX_DELTA = 60
+
+
+class UserStatusCacheTTL(BaseCacheTTL):
+    """
+    用户状态缓存时间，秒
+    """
+    TTL = 60 * 60
+
+
+class UserChannelsCacheTTL(BaseCacheTTL):
+    """
+    用户频道缓存时间，秒
+    """
+    TTL = 60 * 60
+

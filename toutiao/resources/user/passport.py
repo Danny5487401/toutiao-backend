@@ -116,5 +116,6 @@ class AuthorizationResource(Resource):
 
         token, refresh_token = self._generate_tokens(user.id)
 
-
         return {'token': token, 'refresh_token': refresh_token}, 201
+
+

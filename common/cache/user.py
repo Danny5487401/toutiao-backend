@@ -5,6 +5,7 @@ from sqlalchemy.orm import load_only
 from . import constants
 import json
 from cache import statistic as cache_statistic
+from sqlalchemy.exc import SQLAlchemyError, DatabaseError
 
 
 class UserProfileCache(object):
@@ -138,3 +139,44 @@ class UserProfileCache(object):
             else:
                 return True
 
+
+class UserStatusCache(object):
+    """
+    用户状态缓存
+    """
+    def __init__(self, user_id):
+        self.key = 'user:{}:status'.format(user_id)
+        self.user_id = user_id
+
+    def save(self, status):
+        """
+        设置用户状态缓存
+        :param status:
+        """
+        try:
+            current_app.redis_cluster.setex(self.key, constants.UserStatusCacheTTL.get_val(), status)
+        except RedisError as e:
+            current_app.logger.error(e)
+
+    def get(self):
+        """
+        获取用户状态
+        :return:
+        """
+        rc = current_app.redis_cluster
+
+        try:
+            status = rc.get(self.key)
+        except RedisError as e:
+            current_app.logger.error(e)
+            status = None
+
+        if status is not None:
+            return status
+        else:
+            user = User.query.options(load_only(User.status)).filter_by(id=self.user_id).first()
+            if user:
+                self.save(user.status)
+                return user.status
+            else:
+                return False
