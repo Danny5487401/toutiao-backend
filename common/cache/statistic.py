@@ -125,3 +125,42 @@ class UserLikedCountStorage(CountStorageBase):
             .group_by(Article.user_id).all()
         return ret
 
+
+class ArticleCollectingCountStorage(CountStorageBase):
+    """
+    文章收藏数量
+    """
+    key = 'count:art:collecting'
+
+    @staticmethod
+    def db_query():
+        ret = db.session.query(Collection.article_id, func.count(Collection.article_id)) \
+            .filter(Collection.is_deleted == 0).group_by(Collection.article_id).all()
+        return ret
+
+
+class ArticleLikingCountStorage(CountStorageBase):
+    """
+    文章点赞数据
+    """
+    key = 'count:art:liking'
+
+    @staticmethod
+    def db_query():
+        ret = db.session.query(Attitude.article_id, func.count(Collection.article_id)) \
+            .filter(Attitude.attitude == Attitude.ATTITUDE.LIKING).group_by(Collection.article_id).all()
+        return ret
+
+
+class ArticleCommentCountStorage(CountStorageBase):
+    """
+    文章评论数量
+    """
+    key = 'count:art:comm'
+
+    @staticmethod
+    def db_query():
+        ret = db.session.query(Comment.article_id, func.count(Comment.id)) \
+            .filter(Comment.status == Comment.STATUS.APPROVED).group_by(Comment.article_id).all()
+        return ret
+

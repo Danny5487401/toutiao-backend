@@ -17,7 +17,7 @@ class DefaultConfig(object):
     }
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # 追踪数据的修改信号
-    SQLALCHEMY_ECHO = True
+    SQLALCHEMY_ECHO = False  # SQLAlchemy 会记录所有 发给 stderr 的语句，这对调试有用
 
     # redis 哨兵
     REDIS_SENTINELS = [
