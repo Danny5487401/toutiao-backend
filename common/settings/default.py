@@ -1,8 +1,19 @@
 class DefaultConfig(object):
+    # 日志
+    LOGGING_LEVEL = 'DEBUG'
+    LOGGING_FILE_DIR = '/home/python/logs'
+    LOGGING_FILE_MAX_BYTES = 300 * 1024 * 1024
+    LOGGING_FILE_BACKUP = 10
+
     # JWT
     JWT_SECRET = 'TPmi4aLWRbyVq8zu9v82dWYW17/z+UvRnYTt4P6fAXA'
     JWT_EXPIRY_HOURS = 2
     JWT_REFRESH_DAYS = 14
+
+    # rpc
+    class RPC:
+        RECOMMEND = '172.17.0.11:8010'
+        # CHATBOT = '172.17.0.11:9999'
 
     RABBITMQ = 'amqp://admin:admin@81.68.197.3:5672/my_vhost'
 

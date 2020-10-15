@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_cors import CORS
 from redis.exceptions import RedisError
+import grpc
 
 
 def create_flask_app(config, enable_config_file=False):
@@ -46,9 +47,18 @@ def create_app(config, enable_config_file=False):
     from .resources.user import user_bp
     app.register_blueprint(user_bp)
 
+    # 注册新闻模块蓝图
+    from .resources.news import news_bp
+    app.register_blueprint(news_bp)
+
     # 限流器
     from utils.limiter import limiter as lmt
     lmt.init_app(app)
+
+    # 配置日志
+    from utils.logging import create_logger
+    create_logger(app)
+
 
     # 注册url转换器
     from utils.converters import register_converters
@@ -68,5 +78,8 @@ def create_app(config, enable_config_file=False):
     # 集群配置
     from rediscluster import StrictRedisCluster
     app.redis_cluster = StrictRedisCluster(startup_nodes=app.config['REDIS_CLUSTER'])
+
+    app.rpc_reco_channel = grpc.insecure_channel(app.config['RPC'].RECOMMEND)
+    app.rpc_reco = app.rpc_reco_channel
 
     return app
