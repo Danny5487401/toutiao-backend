@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteMappingsManager">
+    <list>
+      <list>
+        <remote-mappings server-id="python@sftp://python@81.68.197.3:22/home/python/.virtualenvs/toutiao/bin/python3.6" />
+      </list>
+    </list>
+  </component>
+</project>
