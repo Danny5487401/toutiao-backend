@@ -1,4 +1,7 @@
 from flask import Flask
+from flask_cors import CORS
+from redis.exceptions import RedisError
+import grpc
 
 
 def create_flask_app(config, enable_config_file=False):
@@ -25,16 +28,58 @@ def create_app(config, enable_config_file=False):
     :return: 应用
     """
     app = create_flask_app(config, enable_config_file)
+
+    # 创建Snowflake ID worker
+    from utils.snowflake.id_worker import IdWorker
+    app.id_worker = IdWorker(app.config['DATACENTER_ID'],
+                             app.config['WORKER_ID'],
+                             app.config['SEQUENCE'])
+
+
+    # 跨域
+    CORS(app)
+
+    # 添加请求钩子
+    from utils.middlewares import jwt_authentication
+    app.before_request(jwt_authentication)
+
     # 注册用户模块蓝图
     from .resources.user import user_bp
     app.register_blueprint(user_bp)
+
+    # 注册新闻模块蓝图
+    from .resources.news import news_bp
+    app.register_blueprint(news_bp)
 
     # 限流器
     from utils.limiter import limiter as lmt
     lmt.init_app(app)
 
+    # 配置日志
+    from utils.logging import create_logger
+    create_logger(app)
+
+
     # 注册url转换器
     from utils.converters import register_converters
     register_converters(app)
+
+    # MySQL数据库连接初始化
+    from models import db
+
+    db.init_app(app)
+
+    # 哨兵配置
+    from redis.sentinel import Sentinel
+    _sentinel = Sentinel(app.config['REDIS_SENTINELS'])
+    app.redis_master = _sentinel.master_for(app.config['REDIS_SENTINEL_SERVICE_NAME'])
+    app.redis_slave = _sentinel.slave_for(app.config['REDIS_SENTINEL_SERVICE_NAME'])
+
+    # 集群配置
+    from rediscluster import StrictRedisCluster
+    app.redis_cluster = StrictRedisCluster(startup_nodes=app.config['REDIS_CLUSTER'])
+
+    app.rpc_reco_channel = grpc.insecure_channel(app.config['RPC'].RECOMMEND)
+    app.rpc_reco = app.rpc_reco_channel
 
     return app
