@@ -21,4 +21,7 @@ user_api.add_resource(channel.ChannelListResource, '/v1_0/user/channels',
 user_api.add_resource(profile.CurrentUserResource, '/v1_0/user',
                       endpoint='CurrentUser')
 
+user_api.add_resource(channel.ChannelResource, '/v1_0/user/channels/<int(min=1):target>',
+                      endpoint='Channel')
+
 

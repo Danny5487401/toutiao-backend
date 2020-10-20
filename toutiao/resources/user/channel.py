@@ -190,4 +190,50 @@ class ChannelListResource(Resource):
         return {'message': 'OK'}, 204
 
 
+class ChannelResource(Resource):
+    """
+    用户频道
+    """
+    method_decorators = [login_required]
+
+    def put(self, target):
+        """
+        修改指定用户频道
+        """
+        user_id = g.user_id
+        json_parser = RequestParser()
+        json_parser.add_argument('seq', type=inputs.positive, required=True, location='json')
+        args = json_parser.parse_args()
+
+        exist = cache_channel.AllChannelsCache.exists(target)
+        if not exist:
+            return {'message': 'Invalid channel id.'}, 400
+
+        query = insert(UserChannel).values(user_id=user_id,
+                                           channel_id=target,
+                                           sequence=args.seq)\
+            .on_duplicate_key_update(sequence=args.seq, is_deleted=False)
+        db.session.execute(query)
+
+        db.session.commit()
+
+        # 清除缓存
+        cache_channel.UserChannelsCache(user_id).clear()
+
+        return {'id': target, 'seq': args.seq}, 201
+
+    def delete(self, target):
+        """
+        删除指定用户频道
+        """
+        user_id = g.user_id
+        UserChannel.query.filter_by(user_id=user_id, channel_id=target).update({'is_deleted': True})
+        db.session.commit()
+
+        # 清除缓存
+        cache_channel.UserChannelsCache(user_id).clear()
+
+        return {'message': 'OK'}, 204
+
+
 
