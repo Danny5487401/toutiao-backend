@@ -20,13 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="50c2addd-6c8d-4b29-8ba4-9ea7e127eee6" name="Default Changelist" comment="&quot;异步发送短信&quot;">
-      <change beforePath="$PROJECT_DIR$/.idea/toutiao-backend.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/toutiao-backend.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/f12a4712-2694-4ebb-8bd0-f5d238da6d34.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/f12a4712-2694-4ebb-8bd0-f5d238da6d34.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/celery_tasks/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/celery_tasks/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/celery_tasks/sms/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/celery_tasks/sms/constants.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/celery_tasks/sms/tasks.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/celery_tasks/sms/tasks.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/utils/limiter.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/utils/limiter.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/toutiao/resources/user/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/toutiao/resources/user/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/cache/statistic.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/cache/statistic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/utils/snowflake/id_worker.py" beforeDir="false" afterPath="$PROJECT_DIR$/common/utils/snowflake/id_worker.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -93,6 +92,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
     <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
@@ -297,7 +297,13 @@
       <workItem from="1602742262882" duration="3503000" />
       <workItem from="1603087657670" duration="6432000" />
       <workItem from="1603106826554" duration="1818000" />
-      <workItem from="1603154090870" duration="17509000" />
+      <workItem from="1603154090870" duration="18370000" />
+      <workItem from="1603175205186" duration="7501000" />
+      <workItem from="1603262005470" duration="355000" />
+      <workItem from="1603262405956" duration="1629000" />
+      <workItem from="1603264205278" duration="175000" />
+      <workItem from="1603264573856" duration="460000" />
+      <workItem from="1603265304822" duration="1584000" />
     </task>
     <task id="LOCAL-00001" summary="&quot;异步发送短信&quot;">
       <created>1601020798368</created>
@@ -360,10 +366,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="345" y="57" key="#SSH_Configurations/0.0.1536.824@0.0.1536.824" timestamp="1601018969365" />
-    <state x="238" y="110" width="1089" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603160200644">
+    <state x="226" y="110" width="1089" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1603265533907">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="238" y="110" width="1089" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1603160200644" />
+    <state x="226" y="110" width="1089" height="714" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1603265533907" />
     <state x="499" y="158" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1601010525028">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -372,42 +378,46 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="626" y="171" key="EnvironmentVariablesDialog/0.0.1536.824@0.0.1536.824" timestamp="1603087711366" />
-    <state x="607" y="146" key="FileChooserDialogImpl" timestamp="1601017593071">
+    <state x="607" y="146" width="651" height="490" key="FileChooserDialogImpl" timestamp="1603177309889">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="607" y="146" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1601017593071" />
-    <state width="1493" height="190" key="GridCell.Tab.0.bottom" timestamp="1603174277628">
+    <state x="607" y="146" width="651" height="490" key="FileChooserDialogImpl/0.0.1536.824@0.0.1536.824" timestamp="1603177309889" />
+    <state width="1493" height="182" key="GridCell.Tab.0.bottom" timestamp="1603175171799">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="190" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603174277628" />
-    <state width="1493" height="190" key="GridCell.Tab.0.center" timestamp="1603174277628">
+    <state width="1493" height="182" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603175171799" />
+    <state width="1493" height="182" key="GridCell.Tab.0.center" timestamp="1603175171799">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="190" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603174277628" />
-    <state width="1493" height="190" key="GridCell.Tab.0.left" timestamp="1603174277627">
+    <state width="1493" height="182" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1603175171799" />
+    <state width="1493" height="182" key="GridCell.Tab.0.left" timestamp="1603175171799">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="190" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603174277627" />
-    <state width="1493" height="190" key="GridCell.Tab.0.right" timestamp="1603174277628">
+    <state width="1493" height="182" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1603175171799" />
+    <state width="1493" height="182" key="GridCell.Tab.0.right" timestamp="1603175171799">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="190" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603174277628" />
-    <state width="1493" height="190" key="GridCell.Tab.1.bottom" timestamp="1603174277470">
+    <state width="1493" height="182" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1603175171799" />
+    <state width="1493" height="320" key="GridCell.Tab.1.bottom" timestamp="1603175171794">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="190" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603174277470" />
-    <state width="1493" height="190" key="GridCell.Tab.1.center" timestamp="1603174277470">
+    <state width="1493" height="320" key="GridCell.Tab.1.bottom/0.0.1536.824@0.0.1536.824" timestamp="1603175171794" />
+    <state width="1493" height="320" key="GridCell.Tab.1.center" timestamp="1603175171794">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="190" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1603174277470" />
-    <state width="1493" height="190" key="GridCell.Tab.1.left" timestamp="1603174277470">
+    <state width="1493" height="320" key="GridCell.Tab.1.center/0.0.1536.824@0.0.1536.824" timestamp="1603175171794" />
+    <state width="1493" height="320" key="GridCell.Tab.1.left" timestamp="1603175171793">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="190" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1603174277470" />
-    <state width="1493" height="190" key="GridCell.Tab.1.right" timestamp="1603174277470">
+    <state width="1493" height="320" key="GridCell.Tab.1.left/0.0.1536.824@0.0.1536.824" timestamp="1603175171793" />
+    <state width="1493" height="320" key="GridCell.Tab.1.right" timestamp="1603175171794">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="190" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1603174277470" />
+    <state width="1493" height="320" key="GridCell.Tab.1.right/0.0.1536.824@0.0.1536.824" timestamp="1603175171794" />
+    <state width="212" height="477" key="HiddenNamespacesPopup" timestamp="1603263917226">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state width="212" height="477" key="HiddenNamespacesPopup/0.0.1536.824@0.0.1536.824" timestamp="1603263917226" />
     <state x="270" y="57" key="SettingsEditor" timestamp="1603168057139">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -432,6 +442,10 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="647" y="142" width="468" height="539" key="ftp.server.browser/0.0.1536.824@0.0.1536.824" timestamp="1603087911285" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1603181880724">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1603181880724" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -440,21 +454,6 @@
           <url>file://$PROJECT_DIR$/common/celery_tasks/sms/tasks.py</url>
           <line>35</line>
           <option name="timeStamp" value="4" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/toutiao/resources/user/passport.py</url>
-          <line>72</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/toutiao/resources/user/passport.py</url>
-          <line>69</line>
-          <option name="timeStamp" value="13" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/toutiao/resources/user/passport.py</url>
-          <line>67</line>
-          <option name="timeStamp" value="19" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/toutiao/resources/user/profile.py</url>
@@ -502,46 +501,26 @@
           <option name="timeStamp" value="48" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/toutiao/resources/user/channel.py</url>
-          <line>229</line>
-          <option name="timeStamp" value="67" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/toutiao/resources/user/channel.py</url>
-          <line>233</line>
-          <option name="timeStamp" value="68" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/toutiao/resources/user/__init__.py</url>
           <line>23</line>
           <option name="timeStamp" value="69" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/toutiao/resources/user/channel.py</url>
-          <line>120</line>
-          <option name="timeStamp" value="70" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/toutiao/resources/user/channel.py</url>
-          <line>122</line>
-          <option name="timeStamp" value="71" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/toutiao/resources/user/channel.py</url>
-          <line>30</line>
-          <option name="timeStamp" value="72" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/toutiao/resources/user/channel.py</url>
           <line>196</line>
           <option name="timeStamp" value="74" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/common/utils/snowflake/id_worker.py</url>
+          <line>3</line>
+          <option name="timeStamp" value="76" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/toutiao_backend$sms__1_.coverage" NAME="sms (1) Coverage Results" MODIFIED="1601016990206" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/common/celery_tasks/sms/yuntongxun" />
-    <SUITE FILE_PATH="coverage/toutiao_backend$main.coverage" NAME="main Coverage Results" MODIFIED="1603174277425" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/toutiao_backend$main.coverage" NAME="main Coverage Results" MODIFIED="1603174401164" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/toutiao_backend$server.coverage" NAME="server Coverage Results" MODIFIED="1603158233987" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/common/rpc" />
     <SUITE FILE_PATH="coverage/toutiao_backend$sms.coverage" NAME="sms Coverage Results" MODIFIED="1601020374918" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/common/celery_tasks/sms/yuntongxun" />
   </component>

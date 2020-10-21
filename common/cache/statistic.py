@@ -2,7 +2,7 @@ from flask import current_app
 from sqlalchemy import func
 from redis.exceptions import RedisError, ConnectionError
 
-from models.news import Article, Attitude
+from models.news import Article, Collection, Attitude, CommentLiking, Comment
 from models.user import Relation
 from models import db
 
@@ -164,3 +164,15 @@ class ArticleCommentCountStorage(CountStorageBase):
             .filter(Comment.status == Comment.STATUS.APPROVED).group_by(Comment.article_id).all()
         return ret
 
+
+class UserArticleCollectingCountStorage(CountStorageBase):
+    """
+    用户收藏数量
+    """
+    key = 'count:user:art:collecting'
+
+    @staticmethod
+    def db_query():
+        ret = db.session.query(Collection.user_id, func.count(Collection.article_id)) \
+            .filter(Collection.is_deleted == 0).group_by(Collection.user_id).all()
+        return ret
