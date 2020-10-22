@@ -2,6 +2,7 @@ from flask import Flask
 from flask_cors import CORS
 from redis.exceptions import RedisError
 import grpc
+from elasticsearch5 import Elasticsearch
 
 
 def create_flask_app(config, enable_config_file=False):
@@ -51,6 +52,11 @@ def create_app(config, enable_config_file=False):
     from .resources.news import news_bp
     app.register_blueprint(news_bp)
 
+    # 搜索
+    from .resources.search import search_bp
+    app.register_blueprint(search_bp)
+
+
     # 限流器
     from utils.limiter import limiter as lmt
     lmt.init_app(app)
@@ -79,7 +85,19 @@ def create_app(config, enable_config_file=False):
     from rediscluster import StrictRedisCluster
     app.redis_cluster = StrictRedisCluster(startup_nodes=app.config['REDIS_CLUSTER'])
 
+    # rpc
     app.rpc_reco_channel = grpc.insecure_channel(app.config['RPC'].RECOMMEND)
     app.rpc_reco = app.rpc_reco_channel
+
+    # Elasticsearch
+    app.es = Elasticsearch(
+        app.config['ES'],
+        # sniff before doing anything
+        sniff_on_start=True,
+        # refresh nodes after a node fails to respond
+        sniff_on_connection_fail=True,
+        # and also every 60 seconds
+        sniffer_timeout=60
+    )
 
     return app

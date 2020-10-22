@@ -45,6 +45,11 @@ class DefaultConfig(object):
         {'host': '172.17.0.11', 'port': '7002'},
     ]
 
+    # ES
+    ES = [
+        '172.17.0.11:9200'
+    ]
+
     # # 限流服务redis
     # # RATELIMIT_STORAGE_URL = 'redis://127.0.0.1:6379/0'
     # RATELIMIT_STORAGE_URL = 'redis+sentinel://172.17.0.11:26380,127.0.0.1:26381,172.17.0.11:26382/mymaster'

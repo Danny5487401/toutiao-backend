@@ -6,6 +6,7 @@ from . import constants
 import json
 from cache import statistic as cache_statistic
 from sqlalchemy.exc import SQLAlchemyError, DatabaseError
+import time
 
 
 class UserProfileCache(object):
@@ -180,3 +181,42 @@ class UserStatusCache(object):
                 return user.status
             else:
                 return False
+
+
+class UserSearchingHistoryStorage(object):
+    """
+    用户搜索历史
+    """
+    def __init__(self, user_id):
+        self.key = 'user:{}:his:searching'.format(user_id)
+        self.user_id = user_id
+
+    def save(self, keyword):
+        """
+        保存用户搜索历史
+        :param keyword: 关键词
+        :return:
+        """
+        pl = current_app.redis_master.pipeline()
+        pl.zadd(self.key, time.time(), keyword)
+        pl.zremrangebyrank(self.key, 0, -1*(constants.SEARCHING_HISTORY_COUNT_PER_USER+1))
+        pl.execute()
+
+    def get(self):
+        """
+        获取搜索历史
+        """
+        try:
+            keywords = current_app.redis_master.zrevrange(self.key, 0, -1)
+        except ConnectionError as e:
+            current_app.logger.error(e)
+            keywords = current_app.redis_slave.zrevrange(self.key, 0, -1)
+
+        keywords = [keyword.decode() for keyword in keywords]
+        return keywords
+
+    def clear(self):
+        """
+        清除
+        """
+        current_app.redis_master.delete(self.key)

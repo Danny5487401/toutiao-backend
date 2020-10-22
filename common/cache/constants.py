@@ -10,6 +10,9 @@ ALL_CHANNELS_CACHE_TTL = 24 * 60 * 60
 # 默认用户频道缓存有效期，秒
 DEFAULT_USER_CHANNELS_CACHE_TTL = 24 * 60 * 60
 
+# 用户搜索历史每人保存数目
+SEARCHING_HISTORY_COUNT_PER_USER = 4
+
 
 class BaseCacheTTL(object):
     """
