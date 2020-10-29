@@ -12,3 +12,7 @@ search_api.representation('application/json')(output_json)
 #
 search_api.add_resource(search.SearchResource, '/v1_0/search',
                         endpoint='Search')
+
+#
+search_api.add_resource(search.SuggestionResource, '/v1_0/suggestion',
+                        endpoint='Suggestion')

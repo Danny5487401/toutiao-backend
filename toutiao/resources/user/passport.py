@@ -2,7 +2,7 @@ from flask_restful import Resource
 from utils.limiter import limiter as lmt
 from flask_limiter.util import get_remote_address
 import random
-from flask import request,current_app
+from flask import request, current_app
 from . import constants
 from celery_tasks.sms.tasks import send_sms_code
 from datetime import datetime, timedelta
@@ -54,8 +54,8 @@ class AuthorizationResource(Resource):
         token = generate_jwt({'user_id': user_id}, expiry, secret)
 
         if refresh:
-            exipry = datetime.utcnow() + timedelta(days=current_app.config['JWT_REFRESH_DAYS'])
-            refresh_token = generate_jwt({'user_id': user_id, 'is_refresh': True}, exipry, secret)
+            expiry = datetime.utcnow() + timedelta(days=current_app.config['JWT_REFRESH_DAYS'])
+            refresh_token = generate_jwt({'user_id': user_id, 'is_refresh': True}, expiry, secret)
         else:
             refresh_token = None
 
@@ -117,5 +117,3 @@ class AuthorizationResource(Resource):
         token, refresh_token = self._generate_tokens(user.id)
 
         return {'token': token, 'refresh_token': refresh_token}, 201
-
-

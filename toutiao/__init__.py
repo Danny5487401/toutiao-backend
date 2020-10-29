@@ -56,7 +56,6 @@ def create_app(config, enable_config_file=False):
     from .resources.search import search_bp
     app.register_blueprint(search_bp)
 
-
     # 限流器
     from utils.limiter import limiter as lmt
     lmt.init_app(app)
@@ -64,7 +63,6 @@ def create_app(config, enable_config_file=False):
     # 配置日志
     from utils.logging import create_logger
     create_logger(app)
-
 
     # 注册url转换器
     from utils.converters import register_converters
