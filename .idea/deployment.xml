@@ -9,17 +9,31 @@
           </mappings>
         </serverdata>
       </paths>
-      <paths name="python@81.68.197.3:22 password">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/toutiao-backend" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
-      <paths name="root@81.68.197.3_docker_job">
+      <paths name="docker_ordov">
         <serverdata>
           <mappings>
             <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="python@192.168.177.128:22">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="tencent">
+        <serverdata>
+          <mappings>
+            <mapping local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+      <paths name="toutiao">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/toutiao-backend" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

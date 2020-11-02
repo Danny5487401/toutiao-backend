@@ -9,8 +9,8 @@ JWT_SECRET = 'TPmi4aLWRbyVq8zu9v82dWYW17/z+UvRnYTt4P6fAXA'
 # 创建读取rabbitmq消息队列的管理对象
 mgr = socketio.KombuManager(RABBITMQ)
 
-# 创建socketio服务器对象
-sio = socketio.Server(async_mode='eventlet', client_manager=mgr)
+# 创建socketio服务器对象  增加允许跨域访问
+sio = socketio.Server(async_mode='eventlet', client_manager=mgr,cors_allowed_origins="*")
 
 # app对象是交给eventlet服务器
 app = socketio.Middleware(sio)
