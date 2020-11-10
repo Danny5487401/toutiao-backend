@@ -4,6 +4,9 @@ import random
 # 默认用户头像
 DEFAULT_USER_PROFILE_PHOTO = 'avator.png'  # 背景图
 
+# 阅读历史每人保存数目
+READING_HISTORY_COUNT_PER_USER = 100
+
 # 全部频道缓存有效期，秒
 ALL_CHANNELS_CACHE_TTL = 24 * 60 * 60
 
