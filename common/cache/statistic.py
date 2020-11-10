@@ -176,3 +176,18 @@ class UserArticleCollectingCountStorage(CountStorageBase):
         ret = db.session.query(Collection.user_id, func.count(Collection.article_id)) \
             .filter(Collection.is_deleted == 0).group_by(Collection.user_id).all()
         return ret
+
+
+class ArticleReadingCountStorage(CountStorageBase):
+    """
+    文章阅读量
+    """
+    key = 'count:art:reading'
+
+
+class UserArticlesReadingCountStorage(CountStorageBase):
+    """
+    作者的文章阅读总量
+    """
+    key = 'count:user:arts:reading'
+

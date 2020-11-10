@@ -8,6 +8,8 @@ from . import constants
 import time
 from cache import article as cache_article
 from utils.decorators import login_required, validate_token_if_using, set_db_to_write, set_db_to_read
+from cache import user as cache_user
+from cache import statistic as cache_statistic
 
 
 class ArticleListResource(Resource):
@@ -92,6 +94,22 @@ class ArticleResource(Resource):
             abort(404, message='The article does not exist.')
 
         article = cache_article.ArticleDetailCache(article_id).get()
+
+        article['is_followed'] = False
+        article['attitude'] = None
+        # 增加用户是否收藏了文章
+        article['is_collected'] = False
+
+        if user_id:
+            # 非匿名用户添加用户的阅读历史
+            try:
+                cache_user.UserReadingHistoryStorage(user_id).save(article_id)
+            except ConnectionError as e:
+                current_app.logger.error(e)
+
+        # 更新阅读数
+        cache_statistic.ArticleReadingCountStorage.incr(article_id)
+        cache_statistic.UserArticlesReadingCountStorage.incr(article['aut_id'])
 
         return article
 

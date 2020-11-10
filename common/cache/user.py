@@ -220,3 +220,47 @@ class UserSearchingHistoryStorage(object):
         清除
         """
         current_app.redis_master.delete(self.key)
+
+
+class UserReadingHistoryStorage(object):
+    """
+    用户阅读历史
+    """
+    def __init__(self, user_id):
+        self.key = 'user:{}:his:reading'.format(user_id)
+        self.user_id = user_id
+
+    def save(self, article_id):
+        """
+        保存用户阅读历史
+        :param article_id: 文章id
+        :return:
+        """
+        try:
+            pl = current_app.redis_master.pipeline()
+            pl.zadd(self.key, time.time(), article_id)
+            pl.zremrangebyrank(self.key, 0, -1*(constants.READING_HISTORY_COUNT_PER_USER+1))
+            pl.execute()
+        except RedisError as e:
+            current_app.logger.error(e)
+
+    def get(self, page, per_page):
+        """
+        获取阅读历史
+        """
+        r = current_app.redis_master
+        try:
+            total_count = r.zcard(self.key)
+        except ConnectionError as e:
+            r = current_app.redis_slave
+            total_count = r.zcard(self.key)
+
+        article_ids = []
+        if total_count > 0 and (page - 1) * per_page < total_count:
+            try:
+                article_ids = r.zrevrange(self.key, (page - 1) * per_page, page * per_page - 1)
+            except ConnectionError as e:
+                current_app.logger.error(e)
+                article_ids = current_app.redis_slave.zrevrange(self.key, (page - 1) * per_page, page * per_page - 1)
+
+        return total_count, article_ids
