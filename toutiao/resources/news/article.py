@@ -1,4 +1,4 @@
-from flask_restful import Resource
+from flask_restful import Resource, abort
 from rpc import reco_pb2, reco_pb2_grpc
 from flask import g, current_app
 from flask_restful.reqparse import RequestParser
@@ -7,6 +7,7 @@ from utils import parser
 from . import constants
 import time
 from cache import article as cache_article
+from utils.decorators import login_required, validate_token_if_using, set_db_to_write, set_db_to_read
 
 
 class ArticleListResource(Resource):
@@ -71,5 +72,27 @@ class ArticleListResource(Resource):
                 results.append(article)
 
         return {'pre_timestamp': pre_timestamp, 'results': results}
+
+
+class ArticleResource(Resource):
+    """
+    文章
+    """
+    method_decorators = [validate_token_if_using]
+
+    def get(self, article_id):
+        """
+        获取文章详情
+        :param article_id: int 文章id
+        """
+        user_id = g.user_id
+        # 查询文章数据
+        exist = cache_article.ArticleInfoCache(article_id).exists()
+        if not exist:
+            abort(404, message='The article does not exist.')
+
+        article = cache_article.ArticleDetailCache(article_id).get()
+
+        return article
 
 

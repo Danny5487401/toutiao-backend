@@ -21,3 +21,5 @@ def route_map():
     """
     rules_iterator = app.url_map.iter_rules()
     return jsonify({rule.endpoint: rule.rule for rule in rules_iterator if rule.endpoint not in ('route_map', 'static')})
+
+

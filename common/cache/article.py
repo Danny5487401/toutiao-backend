@@ -180,3 +180,67 @@ class ChannelTopArticlesStorage(object):
             rank = current_app.redis_slave.zrank(self.key, article_id)
 
         return 0 if rank is None else 1
+
+
+class ArticleDetailCache(object):
+    """
+    文章详细内容缓存
+    """
+    article_fields = {
+        'art_id': fields.Integer(attribute='id'),
+        'title': fields.String(attribute='title'),
+        'pubdate': fields.DateTime(attribute='ctime', dt_format='iso8601'),
+        'content': fields.String(attribute='content.content'),
+        'aut_id': fields.Integer(attribute='user_id'),
+        'ch_id': fields.Integer(attribute='channel_id'),
+    }
+
+    def __init__(self, article_id):
+        self.key = 'art:{}:detail'.format(article_id)
+        self.article_id = article_id
+
+    def get(self):
+        """
+        获取文章详情信息
+        :return:
+        """
+        # 查询文章数据
+        rc = current_app.redis_cluster
+        try:
+            article_bytes = rc.get(self.key)
+        except RedisError as e:
+            current_app.logger.error(e)
+            article_bytes = None
+
+        if article_bytes:
+            # 使用缓存
+            article_dict = json.loads(article_bytes)
+        else:
+            # 查询数据库
+            article = Article.query.options(load_only(
+                Article.id,
+                Article.user_id,
+                Article.title,
+                Article.is_advertising,
+                Article.ctime,
+                Article.channel_id
+            )).filter_by(id=self.article_id, status=Article.STATUS.APPROVED).first()
+
+            article_dict = marshal(article, self.article_fields)
+
+            # 缓存
+            article_cache = json.dumps(article_dict)
+            try:
+                rc.setex(self.key, constants.ArticleDetailCacheTTL.get_val(), article_cache)
+            except RedisError:
+                pass
+
+        user = cache_user.UserProfileCache(article_dict['aut_id']).get()
+
+        article_dict['aut_name'] = user['name']
+        article_dict['aut_photo'] = user['photo']
+
+        return article_dict
+
+    def clear(self):
+        current_app.redis_cluster.delete(self.key)

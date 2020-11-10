@@ -64,3 +64,10 @@ class ArticleInfoCacheTTL(BaseCacheTTL):
     """
     TTL = 30 * 60
 
+
+class ArticleDetailCacheTTL(BaseCacheTTL):
+    """
+    文章详细内容缓存时间，秒
+    """
+    TTL = 60 * 60
+
