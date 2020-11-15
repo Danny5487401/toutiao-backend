@@ -3,7 +3,7 @@ from flask_restful import Api
 
 from utils.output import output_json
 from . import passport
-from . import profile,channel
+from . import profile, channel, following
 
 user_bp = Blueprint('user', __name__)
 user_api = Api(user_bp)
@@ -23,4 +23,11 @@ user_api.add_resource(profile.CurrentUserResource, '/v1_0/user',
 
 user_api.add_resource(channel.ChannelResource, '/v1_0/user/channels/<int(min=1):target>',
                       endpoint='Channel')
+
+
+user_api.add_resource(following.FollowingListResource, '/v1_0/user/followings',
+                      endpoint='Followings')
+
+user_api.add_resource(following.FollowingResource, '/v1_0/user/followings/<int(min=1):target>',
+                      endpoint='Following')
 

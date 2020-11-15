@@ -13,6 +13,8 @@ news_api.add_resource(article.ArticleListResource, '/v1_0/articles',
 news_api.add_resource(article.ArticleResource, '/v1_0/articles/<int(min=1):article_id>',
                       endpoint='Article')
 
+news_api.add_resource(channel.ChannelListResource, '/v1_0/channels',
+                      endpoint='Channels')
 
 
 

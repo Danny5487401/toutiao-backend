@@ -74,3 +74,10 @@ class ArticleDetailCacheTTL(BaseCacheTTL):
     """
     TTL = 60 * 60
 
+
+class UserFollowingsCacheTTL(BaseCacheTTL):
+    """
+    用户关注列表缓存时间，秒
+    """
+    TTL = 30 * 60
+
