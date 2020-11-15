@@ -1,6 +1,7 @@
 from flask import current_app, g
 from redis.exceptions import RedisError, ConnectionError
 from models.user import User, Relation, UserProfile
+from models.news import Article, Collection
 from sqlalchemy.orm import load_only
 from . import constants
 import json
@@ -500,3 +501,83 @@ class UserRelationshipCache(object):
         清除
         """
         current_app.redis_cluster.delete(self.key)
+
+
+class UserArticleCollectionsCache(object):
+    """
+    用户收藏文章缓存
+    """
+    def __init__(self, user_id):
+        self.user_id = user_id
+        self.key = 'user:{}:art:collection'.format(user_id)
+
+    def get_page(self, page, per_page):
+        """
+        获取用户的文章列表
+        :param page: 页数
+        :param per_page: 每页数量
+        :return: total_count, [article_id, ..]
+        """
+        rc = current_app.redis_cluster
+
+        try:
+            pl = rc.pipeline()
+            pl.zcard(self.key)
+            pl.zrevrange(self.key, (page - 1) * per_page, page * per_page)
+            total_count, ret = pl.execute()
+        except RedisError as e:
+            current_app.logger.error(e)
+            total_count = 0
+            ret = []
+
+        if total_count > 0:
+            # Cache exists.
+            return total_count, [int(aid) for aid in ret]
+        else:
+            # No cache.
+            total_count = cache_statistic.UserArticleCollectingCountStorage.get(self.user_id)
+            if total_count == 0:
+                return 0, []
+
+            ret = Collection.query.options(load_only(Collection.article_id, Collection.utime)) \
+                .filter_by(user_id=self.user_id, is_deleted=False) \
+                .order_by(Collection.utime.desc()).all()
+
+            collections = []
+            cache = []
+            for collection in ret:
+                collections.append(collection.article_id)
+                cache.append(collection.utime.timestamp())
+                cache.append(collection.article_id)
+
+            if cache:
+                try:
+                    pl = rc.pipeline()
+                    pl.zadd(self.key, *cache)
+                    pl.expire(self.key, constants.UserArticleCollectionsCacheTTL.get_val())
+                    results = pl.execute()
+                    if results[0] and not results[1]:
+                        rc.delete(self.key)
+                except RedisError as e:
+                    current_app.logger.error(e)
+
+            total_count = len(collections)
+            page_articles = collections[(page - 1) * per_page:page * per_page]
+
+            return total_count, page_articles
+
+    def clear(self):
+        """
+        清除
+        """
+        current_app.redis_cluster.delete(self.key)
+
+    def determine_collect_target(self, target):
+        """
+        判断用户是否收藏了指定文章
+        :param target:
+        :return:
+        """
+        total_count, collections = self.get_page(1, -1)
+        return target in collections
+

@@ -107,9 +107,13 @@ class ArticleResource(Resource):
             except ConnectionError as e:
                 current_app.logger.error(e)
 
-        # 查询关注
-        # article['is_followed'] = cache_user.UserFollowingCache(user_id).determine_follows_target(article['aut_id'])
-        article['is_followed'] = cache_user.UserRelationshipCache(user_id).determine_follows_target(article['aut_id'])
+            # 查询关注
+            # article['is_followed'] = cache_user.UserFollowingCache(user_id).determine_follows_target(article['aut_id'])
+            article['is_followed'] = cache_user.UserRelationshipCache(user_id).determine_follows_target(
+                article['aut_id'])
+
+            # 增加用户是否收藏了文章
+            article['is_collected'] = cache_user.UserArticleCollectionsCache(g.user_id).determine_collect_target(article_id)
 
         # 更新阅读数
         cache_statistic.ArticleReadingCountStorage.incr(article_id)

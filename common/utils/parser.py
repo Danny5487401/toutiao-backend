@@ -2,6 +2,7 @@ import re
 import imghdr
 from cache import user as cache_user
 from cache import channel as cache_channel
+from cache import article as cache_article
 
 
 def mobile(mobile_str):
@@ -96,3 +97,24 @@ def channel_id(value):
                 return _channel_id
             else:
                 raise ValueError('Invalid channel id.')
+
+
+def article_id(value):
+    """
+    检查是否是article_id
+    :param value: 被检验的值
+    :return: article_id
+    """
+    try:
+        _article_id = int(value)
+    except Exception:
+        raise ValueError('Invalid target article id.')
+    else:
+        if _article_id <= 0:
+            raise ValueError('Invalid target article id.')
+        else:
+            ret = cache_article.ArticleInfoCache(_article_id).exists()
+            if ret:
+                return _article_id
+            else:
+                raise ValueError('Invalid target article id.')

@@ -91,3 +91,10 @@ class UserRelationshipNotExistsCacheTTL(BaseCacheTTL):
     TTL = 5 * 60
     MAX_DELTA = 60
 
+class UserArticleCollectionsCacheTTL(BaseCacheTTL):
+    """
+    用户文章收藏缓存时间，秒
+    """
+    TTL = 10 * 60
+    MAX_DELTA = 2 * 60
+
