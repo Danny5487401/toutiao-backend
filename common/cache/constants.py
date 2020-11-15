@@ -84,3 +84,10 @@ class UserFollowingsCacheTTL(BaseCacheTTL):
     """
     TTL = 30 * 60
 
+class UserRelationshipNotExistsCacheTTL(BaseCacheTTL):
+    """
+    用户关系不存在数据缓存时间，秒
+    """
+    TTL = 5 * 60
+    MAX_DELTA = 60
+

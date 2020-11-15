@@ -12,6 +12,7 @@ from cache import statistic as cache_statistic
 from flask_restful import inputs
 from . import constants
 
+
 class FollowingListResource(Resource):
     """
     关注用户
