@@ -16,6 +16,9 @@ DEFAULT_USER_CHANNELS_CACHE_TTL = 24 * 60 * 60
 # 用户搜索历史每人保存数目
 SEARCHING_HISTORY_COUNT_PER_USER = 4
 
+# 允许更新关注缓存的TTL限制，秒
+ALLOW_UPDATE_FOLLOW_CACHE_TTL_LIMIT = 5
+
 
 class BaseCacheTTL(object):
     """

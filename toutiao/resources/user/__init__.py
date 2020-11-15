@@ -24,10 +24,11 @@ user_api.add_resource(profile.CurrentUserResource, '/v1_0/user',
 user_api.add_resource(channel.ChannelResource, '/v1_0/user/channels/<int(min=1):target>',
                       endpoint='Channel')
 
-
+# 关注用户
 user_api.add_resource(following.FollowingListResource, '/v1_0/user/followings',
                       endpoint='Followings')
 
+# 取消关注用户
 user_api.add_resource(following.FollowingResource, '/v1_0/user/followings/<int(min=1):target>',
                       endpoint='Following')
 
